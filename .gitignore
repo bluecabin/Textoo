@@ -1,0 +1,11 @@
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+/target
+/00-gradle-generated.sbt
+*.iml
+/gen
+/bin
