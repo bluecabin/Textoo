@@ -1,15 +1,45 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
-    }
+ext {
+    scalaVersionMajor = '2.11'
+    scalaVersion = "$scalaVersionMajor.7"
+    siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
+    gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
 }
-apply plugin: 'com.android.library'
 
-repositories {
-    jcenter()
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "jp.leafytree.android-scala"
+
+version = '1.0-SNAPSHOT'
+
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "file://$bluecabinMavenRepoDir")
+        pom {
+            artifactId = "textoo"
+            project {
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'bluecabin'
+                        name 'Blue Cabin'
+                        email 'bluecabindev@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
 }
 
 android {
@@ -20,7 +50,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName version
     }
 
     compileOptions {
@@ -28,14 +58,25 @@ android {
         targetCompatibility JavaVersion.VERSION_1_6
     }
     buildTypes {
-        release {
-            minifyEnabled false
+        debug {
+            debuggable true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile "org.scala-lang:scala-library:$scalaVersion"
 }
