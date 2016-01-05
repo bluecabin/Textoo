@@ -1,5 +1,7 @@
 package org.bluecabin.textoo;
 
+import android.text.Spanned;
+
 /**
  * Created by fergus on 1/5/16.
  */
@@ -18,8 +20,8 @@ final class ConfiguratorFactory {
         return StringConfiguratorImpl.create(this);
     }
 
-    public SpannedConfigurator createSpannedConfigurator() {
-        return SpannedConfiguratorImpl.create(this);
+    public SpannedConfigurator createSpannedConfigurator(Spanned text) {
+        return SpannedConfiguratorImpl.create(this, text);
     }
 
     public TextViewConfigurator createTextViewConfigurator() {

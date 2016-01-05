@@ -51,6 +51,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName version
+        multiDexEnabled true
     }
 
     compileOptions {
@@ -76,6 +77,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile "org.scala-lang:scala-library:$scalaVersion"
-    // Unit testing dependencies
-    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
 }

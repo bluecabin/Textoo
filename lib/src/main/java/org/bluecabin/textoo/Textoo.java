@@ -1,6 +1,6 @@
 package org.bluecabin.textoo;
 
-import android.text.Spannable;
+import android.text.Spanned;
 import android.widget.TextView;
 
 /**
@@ -15,8 +15,8 @@ public final class Textoo {
         return ConfiguratorFactory.getInstance().createTextViewConfigurator();
     }
 
-    public static SpannedConfigurator config(Spannable text) {
-        return ConfiguratorFactory.getInstance().createSpannedConfigurator();
+    public static SpannedConfigurator config(Spanned text) {
+        return ConfiguratorFactory.getInstance().createSpannedConfigurator(text);
     }
 
     public static StringConfigurator config(String text) {
