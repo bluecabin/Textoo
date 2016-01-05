@@ -76,4 +76,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile "org.scala-lang:scala-library:$scalaVersion"
+    // Unit testing dependencies
+    testCompile 'junit:junit:4.12'
 }
