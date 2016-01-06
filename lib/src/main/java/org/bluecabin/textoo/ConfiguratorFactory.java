@@ -1,5 +1,6 @@
 package org.bluecabin.textoo;
 
+import android.text.SpannableString;
 import android.text.Spanned;
 
 /**
@@ -16,8 +17,8 @@ final class ConfiguratorFactory {
         return _instance;
     }
 
-    public StringConfigurator createStringConfigurator() {
-        return StringConfiguratorImpl.create(this);
+    public StringConfigurator createStringConfigurator(String text) {
+        return StringConfiguratorImpl.create(this, text);
     }
 
     public SpannedConfigurator createSpannedConfigurator(Spanned text) {

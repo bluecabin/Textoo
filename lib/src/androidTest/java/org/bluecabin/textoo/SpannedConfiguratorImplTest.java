@@ -1,5 +1,6 @@
 package org.bluecabin.textoo;
 
+import android.text.SpannableString;
 import android.text.Spanned;
 
 /**
@@ -8,8 +9,8 @@ import android.text.Spanned;
 public class SpannedConfiguratorImplTest extends LinkifyTest<SpannedConfigurator> {
 
     @Override
-    protected SpannedConfigurator createConfigurator(Spanned text) {
-        return SpannedConfiguratorImpl.create(ConfiguratorFactory.getInstance(), text);
+    protected SpannedConfigurator createConfigurator(String text) {
+        return SpannedConfiguratorImpl.create(ConfiguratorFactory.getInstance(), new SpannableString(text));
     }
 
     @Override

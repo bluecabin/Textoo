@@ -20,6 +20,6 @@ public final class Textoo {
     }
 
     public static StringConfigurator config(String text) {
-        return ConfiguratorFactory.getInstance().createStringConfigurator();
+        return ConfiguratorFactory.getInstance().createStringConfigurator(text);
     }
 }

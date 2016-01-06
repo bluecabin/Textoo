@@ -2,8 +2,7 @@ package org.bluecabin.textoo
 
 import java.util.regex.Pattern
 
-import android.text.Spannable
-import android.text.util.Linkify.{TransformFilter, MatchFilter}
+import android.text.util.Linkify.{MatchFilter, TransformFilter}
 import android.widget.TextView
 
 /**

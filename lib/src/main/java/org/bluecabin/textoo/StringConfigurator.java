@@ -42,7 +42,7 @@ public abstract class StringConfigurator extends BaseConfigurator<Spanned>
 
     public abstract SpannedConfigurator parseHtml();
 
-    public abstract SpannedConfigurator parseHtml(String source, Html.ImageGetter imageGetter,
+    public abstract SpannedConfigurator parseHtml(Html.ImageGetter imageGetter,
                                                   Html.TagHandler tagHandler);
 
 

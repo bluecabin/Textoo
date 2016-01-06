@@ -1,40 +1,40 @@
 package org.bluecabin.textoo
 
-import java.util.regex.Pattern
+import android.text.Html.{ImageGetter, TagHandler}
+import android.text.{Html, Spannable, SpannableString, Spanned}
 
-import android.text.Html.{TagHandler, ImageGetter}
-import android.text.Spanned
-import android.text.util.Linkify.{TransformFilter, MatchFilter}
+import scala.collection.immutable.Queue
 
 /**
   * Created by fergus on 1/5/16.
   */
-class StringConfiguratorImpl private() extends StringConfigurator {
-  override def parseHtml(): SpannedConfigurator = ???
+private class StringConfiguratorImpl private(factory: ConfiguratorFactory,
+                                             val rawText: String)
+  extends StringConfigurator with BaseConfiguratorImpl[Spanned, Spannable]
+  with SpannableLinkifyImpl[Spanned, Spannable, SpannedConfigurator] {
 
-  override def parseHtml(source: String, imageGetter: ImageGetter, tagHandler: TagHandler): SpannedConfigurator = ???
+  override lazy val text: Spannable = new SpannableString(rawText)
+  override protected val actions: Queue[Spannable => Spannable] = Queue.empty
 
-  override def apply(): Spanned = ???
+  override def parseHtml(): SpannedConfigurator =
+    createConfigurator(Spannable.Factory.getInstance().newSpannable(Html.fromHtml(rawText)), actions)
 
-  override def linkifyPhoneNumbers(): SpannedConfigurator = ???
+  override def parseHtml(imageGetter: ImageGetter, tagHandler: TagHandler): SpannedConfigurator =
+    createConfigurator(Spannable.Factory.getInstance().newSpannable(Html.fromHtml(rawText, imageGetter, tagHandler)),
+      actions)
 
-  override def linkifyEmailAddresses(): SpannedConfigurator = ???
+  override protected def toResult(state: Spannable): Spanned = state
 
-  override def linkifyAll(): SpannedConfigurator = ???
-
-  override def linkifyMapAddresses(): SpannedConfigurator = ???
-
-  override def linkifyWebUrls(): SpannedConfigurator = ???
-
-  override def linkify(pattern: Pattern, scheme: String): SpannedConfigurator = ???
-
-  override def linkify(p: Pattern, scheme: String, matchFilter: MatchFilter, transformFilter: TransformFilter): SpannedConfigurator = ???
+  override protected def createConfigurator(text: Spannable, actions: Queue[(Spannable) => Spannable]): SpannedConfigurator =
+    new SpannedConfiguratorImpl(factory, text, actions)
 }
-object StringConfiguratorImpl {
+
+private object StringConfiguratorImpl {
   /**
     *
     * @param factory For access protection.  Only allow those callers who have access to ConfiguratorFactory.
     * @return
     */
-  def create(factory: ConfiguratorFactory): StringConfigurator = new StringConfiguratorImpl
+  def create(factory: ConfiguratorFactory, text: String): StringConfigurator =
+    new StringConfiguratorImpl(factory, text)
 }
