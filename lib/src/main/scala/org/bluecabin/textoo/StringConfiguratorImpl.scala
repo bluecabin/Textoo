@@ -1,7 +1,10 @@
 package org.bluecabin.textoo
 
+import java.util.regex.Pattern
+
 import android.text.Html.{TagHandler, ImageGetter}
 import android.text.Spanned
+import android.text.util.Linkify.{TransformFilter, MatchFilter}
 
 /**
   * Created by fergus on 1/5/16.
@@ -22,6 +25,10 @@ class StringConfiguratorImpl private() extends StringConfigurator {
   override def linkifyMapAddresses(): SpannedConfigurator = ???
 
   override def linkifyWebUrls(): SpannedConfigurator = ???
+
+  override def linkify(pattern: Pattern, scheme: String): SpannedConfigurator = ???
+
+  override def linkify(p: Pattern, scheme: String, matchFilter: MatchFilter, transformFilter: TransformFilter): SpannedConfigurator = ???
 }
 object StringConfiguratorImpl {
   /**
