@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
  * Created by fergus on 1/4/16.
  */
 public abstract class SpannedConfigurator extends BaseConfigurator<Spanned>
-        implements TextLinkify<SpannedConfigurator> {
-    SpannedConfigurator() {
-
+        implements TextLinkify<Spanned, SpannedConfigurator> {
+    protected SpannedConfigurator(TextooContext textooContext) {
+        super(textooContext);
     }
 
     @Override

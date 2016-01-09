@@ -76,4 +76,5 @@
 ###
 # Project config
 ###
+-keepattributes Signature
 -keep class org.bluecabin.textoo.** { *; }

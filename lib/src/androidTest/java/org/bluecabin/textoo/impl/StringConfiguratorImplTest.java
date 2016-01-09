@@ -1,16 +1,23 @@
-package org.bluecabin.textoo;
+package org.bluecabin.textoo.impl;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spanned;
+import org.bluecabin.textoo.SpannedConfigurator;
+import org.bluecabin.textoo.StringConfigurator;
+import org.bluecabin.textoo.TestUtils;
+import org.bluecabin.textoo.TextooContext;
+import org.bluecabin.textoo.impl.StringConfiguratorImpl;
 import org.xml.sax.XMLReader;
+
+import static org.bluecabin.textoo.TestUtils.*;
 
 /**
  * Created by fergus on 1/6/16.
  */
-public class StringConfiguratorImplTest extends LinkifyTest<StringConfigurator> {
+public class StringConfiguratorImplTest extends ConfiguratorImplTest<String, StringConfigurator, Spanned, SpannedConfigurator> {
     private static final String html1 = "This is a test only <b>bold</b> " +
             "<a href=\"http://a.b.c/def\">link</a> " +
             "<i>italic</i> " +
@@ -18,13 +25,18 @@ public class StringConfiguratorImplTest extends LinkifyTest<StringConfigurator> 
             "<unknown>This is a known tag</unknown>";
 
     @Override
-    protected StringConfigurator createConfigurator(String text) {
-        return StringConfiguratorImpl.create(ConfiguratorFactory.getInstance(), text);
+    protected StringConfigurator createConfigurator(TextooContext textooContext, CharSequence text) {
+        return StringConfiguratorImpl.create(textooContext, text.toString());
     }
 
     @Override
-    protected Spanned toSpanned(Object result) {
-        return (Spanned) result;
+    protected String getText(Spanned result) {
+        return result.toString();
+    }
+
+    @Override
+    protected Spanned toSpanned(Spanned result) {
+        return result;
     }
 
     public void testParseHTML() {
@@ -34,7 +46,7 @@ public class StringConfiguratorImplTest extends LinkifyTest<StringConfigurator> 
                 .parseHtml()
                 .apply());
         assertEquals("This is a test only bold link italic img: ￼ This is a known tag", newText.toString());
-        Object[] spans = getSpans(newText);
+        Object[] spans = TestUtils.getSpans(newText);
         assertEquals(4, spans.length);
         assertStyleSpan(newText, spans[0], 20, 24, 33, 1);
         assertURLSpan(newText, spans[1], 25, 29, 33, "http://a.b.c/def");
@@ -58,7 +70,7 @@ public class StringConfiguratorImplTest extends LinkifyTest<StringConfigurator> 
                 .parseHtml(imgGetter, null)
                 .apply());
         assertEquals("This is a test only bold link italic img: ￼ This is a known tag", newText.toString());
-        Object[] spans = getSpans(newText);
+        Object[] spans = TestUtils.getSpans(newText);
         assertEquals(4, spans.length);
         assertStyleSpan(newText, spans[0], 20, 24, 33, 1);
         assertURLSpan(newText, spans[1], 25, 29, 33, "http://a.b.c/def");
@@ -89,7 +101,7 @@ public class StringConfiguratorImplTest extends LinkifyTest<StringConfigurator> 
                 .parseHtml(null, tagHandler)
                 .apply());
         assertEquals("This is a test only bold link italic img: ￼ [unknown:This is a known tag]", newText.toString());
-        Object[] spans = getSpans(newText);
+        Object[] spans = TestUtils.getSpans(newText);
         assertEquals(4, spans.length);
         assertStyleSpan(newText, spans[0], 20, 24, 33, 1);
         assertURLSpan(newText, spans[1], 25, 29, 33, "http://a.b.c/def");

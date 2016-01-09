@@ -9,14 +9,14 @@ import java.util.regex.Pattern;
 /**
  * Created by fergus on 1/5/16.
  */
-public abstract class StringConfigurator extends BaseConfigurator<Spanned>
-        implements TextLinkify<SpannedConfigurator> {
-    StringConfigurator() {
-
+public abstract class StringConfigurator extends BaseConfigurator<String>
+        implements TextLinkify<Spanned, SpannedConfigurator> {
+    protected StringConfigurator(TextooContext textooContext) {
+        super(textooContext);
     }
 
     @Override
-    public abstract Spanned apply();
+    public abstract String apply();
 
     @Override
     public abstract SpannedConfigurator linkifyEmailAddresses();

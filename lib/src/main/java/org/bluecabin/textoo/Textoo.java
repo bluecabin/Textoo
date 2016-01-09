@@ -11,15 +11,19 @@ public final class Textoo {
 
     }
 
+    static TextooContext createContext() {
+        return new TextooContext();
+    }
+
     public static TextViewConfigurator config(TextView text) {
-        return ConfiguratorFactory.getInstance().createTextViewConfigurator();
+        return ConfiguratorFactory.getInstance().createTextViewConfigurator(createContext(), text);
     }
 
     public static SpannedConfigurator config(Spanned text) {
-        return ConfiguratorFactory.getInstance().createSpannedConfigurator(text);
+        return ConfiguratorFactory.getInstance().createSpannedConfigurator(createContext(), text);
     }
 
     public static StringConfigurator config(String text) {
-        return ConfiguratorFactory.getInstance().createStringConfigurator(text);
+        return ConfiguratorFactory.getInstance().createStringConfigurator(createContext(), text);
     }
 }

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Created by fergus on 1/5/16.
  */
-interface TextLinkify<C extends BaseConfigurator<?>> {
+public interface TextLinkify<O, C extends BaseConfigurator<O>> {
     C linkifyEmailAddresses();
 
     C linkifyMapAddresses();

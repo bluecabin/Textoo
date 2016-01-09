@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
  * Created by fergus on 1/4/16.
  */
 public abstract class TextViewConfigurator extends BaseConfigurator<TextView>
-        implements TextLinkify<TextViewConfigurator>, LinksHandling<TextViewConfigurator> {
-    TextViewConfigurator() {
-
+        implements TextLinkify<TextView, TextViewConfigurator>, LinksHandling<TextView, TextViewConfigurator> {
+    protected TextViewConfigurator(TextooContext textooContext) {
+        super(textooContext);
     }
 
     @Override
@@ -38,9 +38,6 @@ public abstract class TextViewConfigurator extends BaseConfigurator<TextView>
     @Override
     public abstract TextViewConfigurator linkify(Pattern p, String scheme, Linkify.MatchFilter matchFilter,
                                                  Linkify.TransformFilter transformFilter);
-
-    @Override
-    public abstract TextViewConfigurator handleTextooLinks();
 
     @Override
     public abstract TextViewConfigurator addLinksHandler(LinksHandler handler);
