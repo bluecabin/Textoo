@@ -1,10 +1,12 @@
 package org.bluecabin.textoo;
 
 import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
+import android.widget.TextView;
 import org.bluecabin.textoo.impl.ClickableSpanWrapper;
 
 import java.util.ArrayList;
@@ -28,6 +30,15 @@ public class TestUtils {
             }
         }
         return result.toArray(new Object[result.size()]);
+    }
+
+    public static Spanned toSpanned(TextView result) {
+        CharSequence chars = result.getText();
+        if (chars instanceof Spanned) {
+            return (Spanned) chars;
+        } else {
+            return new SpannableString(chars);
+        }
     }
 
     public static void assertURLSpan(Spanned actualText, Object actualSpan, int expectedStart, int expectedEnd,

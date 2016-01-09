@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import junit.framework.Assert;
 import org.bluecabin.textoo.LinksHandler;
+import org.bluecabin.textoo.TestUtils;
 import org.bluecabin.textoo.TextViewConfigurator;
 import org.bluecabin.textoo.TextooContext;
 import org.bluecabin.textoo.impl.TextViewConfiguratorImpl;
@@ -37,13 +38,8 @@ public class TextViewConfiguratorImplTest extends ConfiguratorImplTest<TextView,
     }
 
     @Override
-    protected Spanned toSpanned(TextView result) {
-        CharSequence chars = result.getText();
-        if (chars instanceof Spanned) {
-            return (Spanned) chars;
-        } else {
-            return new SpannableString(chars);
-        }
+    protected Spanned toSpanned(TextView view) {
+        return TestUtils.toSpanned(view);
     }
 
     public void testAddLinksHandler() {
