@@ -8,11 +8,13 @@ import java.util.regex.Pattern;
 /**
  * Created by fergus on 1/4/16.
  */
-public abstract class SpannedConfigurator extends BaseConfigurator<Spanned>
+public abstract class SpannedConfigurator extends Configurator<Spanned>
         implements TextLinkify<Spanned, SpannedConfigurator> {
     protected SpannedConfigurator(TextooContext textooContext) {
         super(textooContext);
     }
+
+    // Re-declare abstract methods with generic return type to enable scala implementations
 
     @Override
     public abstract Spanned apply();

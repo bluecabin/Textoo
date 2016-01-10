@@ -9,11 +9,13 @@ import java.util.regex.Pattern;
 /**
  * Created by fergus on 1/5/16.
  */
-public abstract class StringConfigurator extends BaseConfigurator<String>
+public abstract class StringConfigurator extends Configurator<String>
         implements TextLinkify<Spanned, SpannedConfigurator> {
     protected StringConfigurator(TextooContext textooContext) {
         super(textooContext);
     }
+
+    // Re-declare abstract methods with generic return type to enable scala implementations
 
     @Override
     public abstract String apply();

@@ -6,8 +6,9 @@ import android.text.Html.{ImageGetter, TagHandler}
 import android.text.util.Linkify.{MatchFilter, TransformFilter}
 import android.text.{Html, Spannable}
 import org.bluecabin.textoo.impl.Change.ChangeQueue
+import org.bluecabin.textoo.util.CharSequenceSupport
 import org.bluecabin.textoo.{SpannedConfigurator, StringConfigurator, TextooContext}
-
+import CharSequenceSupport._
 import scala.collection.immutable.Queue
 
 /**
@@ -17,23 +18,21 @@ private class StringConfiguratorImpl private(override protected val initState: (
                                              override protected val changes: ChangeQueue[String] = Queue.empty)
                                             (implicit textooContext: TextooContext)
   extends StringConfigurator(textooContext)
-  with BaseConfiguratorImpl[String, String, StringConfiguratorImpl] {
+  with ConfiguratorImpl[String, StringConfiguratorImpl] {
 
   override def parseHtml(): SpannedConfigurator =
     new SpannedConfiguratorImpl({ () =>
-      Spannable.Factory.getInstance().newSpannable(Html.fromHtml(apply()))
+      Html.fromHtml(apply()).toSpannable
     })
 
   override def parseHtml(imageGetter: ImageGetter, tagHandler: TagHandler): SpannedConfigurator =
     new SpannedConfiguratorImpl({ () =>
-      Spannable.Factory.getInstance().newSpannable(Html.fromHtml(apply(), imageGetter, tagHandler))
+      Html.fromHtml(apply(), imageGetter, tagHandler).toSpannable
     })
 
   override protected def toResult(from: String): String = from
 
-  private def toSpannedConfigurator = new SpannedConfiguratorImpl({ () =>
-    Spannable.Factory.getInstance().newSpannable(apply())
-  })
+  private def toSpannedConfigurator = new SpannedConfiguratorImpl({ () => apply().toSpanned })
 
   override def linkifyEmailAddresses(): SpannedConfigurator = toSpannedConfigurator.linkifyEmailAddresses()
 

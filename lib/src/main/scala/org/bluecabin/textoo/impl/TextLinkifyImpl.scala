@@ -5,16 +5,15 @@ import java.util.regex.Pattern
 import android.text.util.Linkify
 import android.text.util.Linkify.{MatchFilter, TransformFilter}
 import org.bluecabin.textoo.impl.Change.ChangeQueue
-import org.bluecabin.textoo.{BaseConfigurator, TextLinkify, TextooContext}
+import org.bluecabin.textoo.{Configurator, TextLinkify, TextooContext}
 
 import scala.collection.immutable.Queue
 
 /**
   * Created by fergus on 1/6/16.
   */
-private trait TextLinkifyImpl[T, O, C <: BaseConfigurator[O]]
-  extends TextLinkify[O, C] {
-  self: BaseConfiguratorImpl[T, O, C] =>
+private trait TextLinkifyImpl[T, C <: Configurator[T] with TextLinkify[T, C]]
+  extends ConfiguratorImpl[T, C] with TextLinkify[T, C] {
 
   protected val textooContext: TextooContext
 

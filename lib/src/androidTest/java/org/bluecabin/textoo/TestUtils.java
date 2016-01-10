@@ -8,6 +8,7 @@ import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
 import android.widget.TextView;
 import org.bluecabin.textoo.impl.ClickableSpanWrapper;
+import org.bluecabin.textoo.util.CharSequenceSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +35,7 @@ public class TestUtils {
 
     public static Spanned toSpanned(TextView result) {
         CharSequence chars = result.getText();
-        if (chars instanceof Spanned) {
-            return (Spanned) chars;
-        } else {
-            return new SpannableString(chars);
-        }
+        return CharSequenceSupport.toSpanned(chars);
     }
 
     public static void assertURLSpan(Spanned actualText, Object actualSpan, int expectedStart, int expectedEnd,

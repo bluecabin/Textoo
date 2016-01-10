@@ -1,10 +1,9 @@
 package org.bluecabin.textoo.impl;
 
-import android.text.SpannableString;
 import android.text.Spanned;
 import org.bluecabin.textoo.SpannedConfigurator;
 import org.bluecabin.textoo.TextooContext;
-import org.bluecabin.textoo.impl.SpannedConfiguratorImpl;
+import org.bluecabin.textoo.util.CharSequenceSupport;
 
 /**
  * Created by fergus on 1/5/16.
@@ -12,8 +11,13 @@ import org.bluecabin.textoo.impl.SpannedConfiguratorImpl;
 public class SpannedConfiguratorImplTest extends ConfiguratorImplTest<Spanned, SpannedConfigurator, Spanned, SpannedConfigurator> {
 
     @Override
-    protected SpannedConfigurator createConfigurator(TextooContext textooContext, CharSequence text) {
-        return SpannedConfiguratorImpl.create(textooContext, new SpannableString(text));
+    protected Spanned createInitState(CharSequence text) {
+        return CharSequenceSupport.toSpanned(text);
+    }
+
+    @Override
+    protected SpannedConfigurator createConfigurator(TextooContext textooContext, Spanned initState) {
+        return SpannedConfiguratorImpl.create(textooContext, initState);
     }
 
     @Override

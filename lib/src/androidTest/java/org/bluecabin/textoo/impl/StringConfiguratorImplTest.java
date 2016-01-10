@@ -9,7 +9,6 @@ import org.bluecabin.textoo.SpannedConfigurator;
 import org.bluecabin.textoo.StringConfigurator;
 import org.bluecabin.textoo.TestUtils;
 import org.bluecabin.textoo.TextooContext;
-import org.bluecabin.textoo.impl.StringConfiguratorImpl;
 import org.xml.sax.XMLReader;
 
 import static org.bluecabin.textoo.TestUtils.*;
@@ -25,8 +24,13 @@ public class StringConfiguratorImplTest extends ConfiguratorImplTest<String, Str
             "<unknown>This is a known tag</unknown>";
 
     @Override
-    protected StringConfigurator createConfigurator(TextooContext textooContext, CharSequence text) {
-        return StringConfiguratorImpl.create(textooContext, text.toString());
+    protected String createInitState(CharSequence text) {
+        return text.toString();
+    }
+
+    @Override
+    protected StringConfigurator createConfigurator(TextooContext textooContext, String initState) {
+        return StringConfiguratorImpl.create(textooContext, initState);
     }
 
     @Override

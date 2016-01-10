@@ -12,8 +12,10 @@ import static org.bluecabin.textoo.TestUtils.assertURLSpan;
 /**
  * Created by fergus on 1/6/16.
  */
-public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> & TextLinkify<R2, C2>, R2, C2 extends BaseConfigurator<R2>>
-        extends TextooTest {
+public abstract class ConfiguratorImplTest<
+        T1, C1 extends Configurator<T1> & TextLinkify<T2, C2>,
+        T2, C2 extends Configurator<T2> & TextLinkify<T2, C2>
+        > extends TextooTest {
 
     private static final String inputText1 = "This: dummy@apple.com is an email address; " +
             "And http://www.google.com/a/b is an url; " +
@@ -24,21 +26,27 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
             "And +852 87654321 is phone number; " +
             "And 1601 Amphitheatre Pkwy, Mountain View, CA 94043 is map address; ";
 
-    protected final Object[] getSpans(R2 actualResult) {
+    protected final Object[] getSpans(T2 actualResult) {
         Spanned actualSpanned = toSpanned(actualResult);
         return TestUtils.getSpans(actualSpanned);
     }
 
 
-    protected abstract C1 createConfigurator(TextooContext textooContext, CharSequence text);
+    protected abstract T1 createInitState(CharSequence text);
+
+    protected abstract C1 createConfigurator(TextooContext textooContext, T1 initState);
+
+    protected final C1 createConfigurator(TextooContext textooContext, CharSequence text) {
+        return createConfigurator(textooContext, createInitState(text));
+    }
 
     protected final C1 createConfigurator(CharSequence text) {
         return createConfigurator(createTextooContext(), text);
     }
 
-    protected abstract String getText(R2 result);
+    protected abstract String getText(T2 result);
 
-    protected abstract Spanned toSpanned(R2 result);
+    protected abstract Spanned toSpanned(T2 result);
 
     //
     // Test cases
@@ -47,7 +55,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyEmailAddresses1() {
         String text = inputText1;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyEmailAddresses()
                 .apply();
         assertEquals(text, getText(result));
@@ -60,7 +68,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyEmailAddresses2() {
         String text = inputText1 + inputText2;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyEmailAddresses()
                 .apply();
         assertEquals(text, getText(result));
@@ -74,7 +82,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyMapAddresses1() {
         String text = inputText1;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyMapAddresses()
                 .apply();
         assertEquals(text, getText(result));
@@ -87,7 +95,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyMapAddresses2() {
         String text = inputText1 + inputText2;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyMapAddresses()
                 .apply();
         assertEquals(text, getText(result));
@@ -101,7 +109,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyPhoneNumbers1() {
         String text = inputText1;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyPhoneNumbers()
                 .apply();
         assertEquals(text, getText(result));
@@ -114,7 +122,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyPhoneNumbers2() {
         String text = inputText1 + inputText2;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyPhoneNumbers()
                 .apply();
         assertEquals(text, getText(result));
@@ -128,7 +136,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyWebUrls1() {
         String text = inputText1;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyWebUrls()
                 .apply();
         assertEquals(text, getText(result));
@@ -141,7 +149,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyWebUrls2() {
         String text = inputText1 + inputText2;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyWebUrls()
                 .apply();
         assertEquals(text, getText(result));
@@ -155,7 +163,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyAll1() {
         String text = inputText1;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyAll()
                 .apply();
         assertEquals(text, getText(result));
@@ -171,7 +179,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
     public void testLinkifyAll2() {
         String text = inputText1 + inputText2;
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkifyAll()
                 .apply();
         assertEquals(text, getText(result));
@@ -192,7 +200,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
         String text = inputText1;
         Pattern pattern = Pattern.compile("CA");
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkify(pattern, "http://www.google.ie/search?q=")
                 .apply();
         assertEquals(text, getText(result));
@@ -207,7 +215,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
         String text = inputText1 + inputText2;
         Pattern pattern = Pattern.compile("CA");
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkify(pattern, "http://www.google.ie/search?q=")
                 .apply();
         assertEquals(text, getText(result));
@@ -229,7 +237,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
             }
         };
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkify(pattern, "http://www.google.ie/search?q=", matchFilter, null)
                 .apply();
         assertEquals(text, getText(result));
@@ -247,7 +255,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
             }
         };
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkify(pattern, "http://www.google.ie/search?q=", matchFilter, null)
                 .apply();
         assertEquals(text, getText(result));
@@ -267,7 +275,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
             }
         };
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkify(pattern, "http://www.google.ie/search?q=", null, transformFilter)
                 .apply();
         assertEquals(text, getText(result));
@@ -288,7 +296,7 @@ public abstract class ConfiguratorImplTest<R1, C1 extends BaseConfigurator<R1> &
             }
         };
         C1 config = createConfigurator(text);
-        R2 result = config
+        T2 result = config
                 .linkify(pattern, "http://www.google.ie/search?q=", null, transformFilter)
                 .apply();
         assertEquals(text, getText(result));

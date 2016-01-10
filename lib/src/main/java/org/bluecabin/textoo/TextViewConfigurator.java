@@ -8,11 +8,13 @@ import java.util.regex.Pattern;
 /**
  * Created by fergus on 1/4/16.
  */
-public abstract class TextViewConfigurator extends BaseConfigurator<TextView>
+public abstract class TextViewConfigurator extends Configurator<TextView>
         implements TextLinkify<TextView, TextViewConfigurator>, LinksHandling<TextView, TextViewConfigurator> {
     protected TextViewConfigurator(TextooContext textooContext) {
         super(textooContext);
     }
+
+    // Re-declare abstract methods with generic return type to enable scala implementations
 
     @Override
     public abstract TextView apply();
