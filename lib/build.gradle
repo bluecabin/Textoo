@@ -3,6 +3,13 @@ ext {
     scalaVersion = rootProject.ext.scalaVersion
     siteUrl = rootProject.ext.siteUrl
     gitUrl = rootProject.ext.gitUrl
+    androidCompileSdkVersion = rootProject.ext.androidCompileSdkVersion
+    androidBuildToolsVersion = rootProject.ext.androidBuildToolsVersion
+    androidMinSdkVersion = rootProject.ext.androidMinSdkVersion
+    androidVersionCode = rootProject.ext.androidVersionCode
+    androidSourceCompatibility = rootProject.ext.androidSourceCompatibility
+    androidTargetCompatibility = rootProject.ext.androidTargetCompatibility
+
 }
 
 apply plugin: 'com.android.library'
@@ -40,20 +47,20 @@ uploadArchives {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion androidBuildToolsVersion
+    compileSdkVersion androidCompileSdkVersion
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 1
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidCompileSdkVersion
+        versionCode androidVersionCode
         versionName version
         multiDexEnabled true
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility androidSourceCompatibility
+        targetCompatibility androidTargetCompatibility
     }
     buildTypes {
         debug {

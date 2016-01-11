@@ -1,10 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+group = 'org.bluecabin.textoo'
+version = '0.9'
+
 ext {
     scalaVersionMajor = '2.11'
     scalaVersion = "$scalaVersionMajor.7"
     siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
     gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
+    androidMinSdkVersion = 9
+    androidCompileSdkVersion = 23
+    androidBuildToolsVersion = "23.0.1"
+    androidVersionCode = 1
+    androidSourceCompatibility = JavaVersion.VERSION_1_6
+    androidTargetCompatibility = JavaVersion.VERSION_1_6
 }
 
 buildscript {
@@ -24,12 +33,10 @@ buildscript {
 
 apply plugin: 'com.jfrog.bintray'
 
-group = 'org.bluecabin.textoo'
-version = '0.9'
-
 allprojects {
 
     repositories {
         jcenter()
     }
+
 }
