@@ -1,16 +1,13 @@
 ext {
-    scalaVersionMajor = '2.11'
-    scalaVersion = "$scalaVersionMajor.7"
-    siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
-    gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
+    scalaVersionMajor = rootProject.ext.scalaVersionMajor
+    scalaVersion = rootProject.ext.scalaVersion
+    siteUrl = rootProject.ext.siteUrl
+    gitUrl = rootProject.ext.gitUrl
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "jp.leafytree.android-scala"
-
-version = '1.0-SNAPSHOT'
-
 
 uploadArchives {
     repositories.mavenDeployer {
