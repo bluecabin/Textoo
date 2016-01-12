@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "jp.leafytree.android-scala"
 apply plugin: 'com.jfrog.bintray'
 
@@ -40,6 +41,55 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 }
 
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+//    archives javadocJar
+    archives sourcesJar
+}
+
+install {
+    repositories.mavenDeployer {
+        repository(url: temporaryDir.toURI())
+        pom {
+            project {
+                url siteUrl
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerMavenId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
 bintray {
     user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
     key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
@@ -50,7 +100,7 @@ bintray {
         repo = bintrayRepoType
         name = bintrayRepoName
         userOrg = user
-        licenses = project.licenses
+        licenses = [licenseBintrayCode]
         websiteUrl = siteUrl
         issueTrackerUrl = issuesUrl
         vcsUrl = gitUrl
