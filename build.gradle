@@ -2,8 +2,8 @@
 
 ext {
     projGroup = 'org.bluecabin.textoo'
-    projVerName = '0.9'
-    projVerVcsTag = '0.9'
+    projVerName = '0.9.1'
+    projVerVcsTag = '0.9.1'
     projVerAndroidCode = 1
     siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
     gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
