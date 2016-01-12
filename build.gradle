@@ -6,6 +6,7 @@ ext {
     projVerAndroidCode = 1
     siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
     gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
+    issuesUrl = 'https://github.com/bluecabin/Textoo/issues'  // Issues tracker URL
     scalaVersionMajor = '2.11'
     scalaVersion = "$scalaVersionMajor.7"
     androidMinSdkVersion = 9

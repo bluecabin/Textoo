@@ -51,6 +51,8 @@ bintray {
         name = bintrayRepoName
         userOrg = user
         licenses = project.licenses
+        websiteUrl = siteUrl
+        issueTrackerUrl = issuesUrl
         vcsUrl = gitUrl
         version {
             name = project.version
