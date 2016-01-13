@@ -1,0 +1,5 @@
+ext {
+    bintrayUser = 'userId'
+    bintrayApiKey = "apiKey"
+    bintrayGPGPassphrase = 'The passphrase for GPG signing'
+}

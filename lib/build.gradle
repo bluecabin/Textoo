@@ -1,62 +1,23 @@
-ext {
-    scalaVersionMajor = '2.11'
-    scalaVersion = "$scalaVersionMajor.7"
-    siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
-    gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "jp.leafytree.android-scala"
-
-version = '1.0-SNAPSHOT'
-
-
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: "file://$bluecabinMavenRepoDir")
-        pom {
-            artifactId = "textoo"
-            project {
-                url siteUrl
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'bluecabin'
-                        name 'Blue Cabin'
-                        email 'bluecabindev@gmail.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
+apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion androidBuildToolsVersion
+    compileSdkVersion androidCompileSdkVersion
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 1
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidCompileSdkVersion
+        versionCode projVerAndroidCode
         versionName version
         multiDexEnabled true
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility androidSourceCompatibility
+        targetCompatibility androidTargetCompatibility
     }
     buildTypes {
         debug {
@@ -78,4 +39,80 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile "org.scala-lang:scala-library:$scalaVersion"
     compile 'com.android.support:multidex:1.0.1'
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.scala.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+//    archives javadocJar
+    archives sourcesJar
+}
+
+install {
+    repositories.mavenDeployer {
+        repository(url: temporaryDir.toURI())
+        pom {
+            project {
+                url siteUrl
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerMavenId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    configurations = ['archives']
+    dryRun = false
+    publish = false
+    pkg {
+        repo = bintrayRepoType
+        name = bintrayRepoName
+        userOrg = user
+        licenses = [licenseBintrayCode]
+        websiteUrl = siteUrl
+        issueTrackerUrl = issuesUrl
+        vcsUrl = gitUrl
+        version {
+            name = project.version
+            released = new Date()
+            vcsTag = projVerVcsTag
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = bintrayGPGPassphrase //The passphrase for GPG signing'
+            }
+        }
+    }
 }

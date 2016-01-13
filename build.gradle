@@ -1,11 +1,42 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+ext {
+    projGroup = 'org.bluecabin.textoo'
+    projVerName = '0.9.2'
+    projVerVcsTag = '0.9.2'
+    projVerAndroidCode = 1
+    siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
+    gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
+    issuesUrl = 'https://github.com/bluecabin/Textoo/issues'  // Issues tracker URL
+    scalaVersionMajor = '2.11'
+    scalaVersion = "$scalaVersionMajor.7"
+    androidMinSdkVersion = 9
+    androidCompileSdkVersion = 23
+    androidBuildToolsVersion = "23.0.1"
+    androidSourceCompatibility = JavaVersion.VERSION_1_6
+    androidTargetCompatibility = JavaVersion.VERSION_1_6
+    licenseBintrayCode = 'Apache-2.0'
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    bintrayRepoType = 'maven'
+    bintrayRepoName = 'textoo'
+    developerName = 'Blue Cabin'
+    developerEmail = 'bluecabindev@gmail.com'
+    developerMavenId = 'bluecabin'
+}
+
+def localGradleFile = file('local.gradle')
+if (localGradleFile.exists()) {
+    apply from: localGradleFile
+}
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.3.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.5'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
         classpath "jp.leafytree.gradle:gradle-android-scala-plugin:1.4"
 
@@ -15,9 +46,11 @@ buildscript {
 }
 
 allprojects {
-    group = 'org.bluecabin'
+    group = projGroup
+    version = projVerName
 
     repositories {
         jcenter()
     }
+
 }
