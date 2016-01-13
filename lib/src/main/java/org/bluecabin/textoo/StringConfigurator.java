@@ -42,8 +42,16 @@ public abstract class StringConfigurator extends Configurator<String>
     public abstract SpannedConfigurator linkify(Pattern p, String scheme, Linkify.MatchFilter matchFilter,
                                                 Linkify.TransformFilter transformFilter);
 
+    /**
+     * See <a href="http://developer.android.com/reference/android/text/Html.html#fromHtml(java.lang.String)">android.text.Html.fromHtml(java.lang.String)</a>
+     *
+     */
     public abstract SpannedConfigurator parseHtml();
 
+    /**
+     * See <a href="http://developer.android.com/reference/android/text/Html.html#fromHtml(java.lang.String, android.text.Html.ImageGetter, android.text.Html.TagHandler)">android.text.Html#fromHtml(java.lang.String, android.text.Html.ImageGetter, android.text.Html.TagHandler)</a>
+     *
+     */
     public abstract SpannedConfigurator parseHtml(Html.ImageGetter imageGetter,
                                                   Html.TagHandler tagHandler);
 

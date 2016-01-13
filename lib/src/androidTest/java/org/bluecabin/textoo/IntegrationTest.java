@@ -104,6 +104,10 @@ public class IntegrationTest extends AndroidTestCase {
         String str = inputText1 + inputText2;
         TextView input = new TextView(getContext());
         input.setText(str);
+        Spanned x = Textoo
+                .config("Links: <a href='http://www.google.com'>Google</a>")
+                .parseHtml()
+                .apply();
         TextView newView = Textoo
                 .config(input)
                 .linkifyEmailAddresses()
