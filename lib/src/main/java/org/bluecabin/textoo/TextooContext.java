@@ -1,8 +1,7 @@
 package org.bluecabin.textoo;
 
 /**
- * Context for a 'chain' of config operations.  Also as a token for instantiating internal classes.
- * Created by fergus on 1/9/16.
+ * Internal context for a 'chain' of config operations.  Also as a access control token internal classes.
  */
 public final class TextooContext {
     TextooContext() {

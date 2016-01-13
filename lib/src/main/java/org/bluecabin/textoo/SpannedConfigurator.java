@@ -6,7 +6,7 @@ import android.text.util.Linkify;
 import java.util.regex.Pattern;
 
 /**
- * Created by fergus on 1/4/16.
+ * Base configurator for <a href="http://developer.android.com/reference/android/text/Spanned.html">android.text.Spanned</a>
  */
 public abstract class SpannedConfigurator extends Configurator<Spanned>
         implements TextLinkify<Spanned, SpannedConfigurator> {

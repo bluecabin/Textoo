@@ -7,7 +7,7 @@ import org.bluecabin.textoo.impl.StringConfiguratorImpl;
 import org.bluecabin.textoo.impl.TextViewConfiguratorImpl;
 
 /**
- * Created by fergus on 1/5/16.
+ * Internal configurator factory
  */
 final class ConfiguratorFactory {
     private ConfiguratorFactory() {

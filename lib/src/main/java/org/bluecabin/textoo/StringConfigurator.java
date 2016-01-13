@@ -7,7 +7,7 @@ import android.text.util.Linkify;
 import java.util.regex.Pattern;
 
 /**
- * Created by fergus on 1/5/16.
+ * Base configurator for java.lang.String
  */
 public abstract class StringConfigurator extends Configurator<String>
         implements TextLinkify<Spanned, SpannedConfigurator> {

@@ -6,7 +6,7 @@ import android.widget.TextView;
 import java.util.regex.Pattern;
 
 /**
- * Created by fergus on 1/4/16.
+ * Base configurator for <a href="http://developer.android.com/reference/android/widget/TextView.html">android.widget.TextView</a>
  */
 public abstract class TextViewConfigurator extends Configurator<TextView>
         implements TextLinkify<TextView, TextViewConfigurator>, LinksHandling<TextView, TextViewConfigurator> {
@@ -16,6 +16,9 @@ public abstract class TextViewConfigurator extends Configurator<TextView>
 
     // Re-declare abstract methods with generic return type to enable scala implementations
 
+    /**
+     * @return the configured TextView.  If there are links in the TextView, the movement method for the text is changed to LinkMovementMethod.
+     */
     @Override
     public abstract TextView apply();
 
