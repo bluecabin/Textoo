@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * Base configurator for <a href="http://developer.android.com/reference/android/text/Spanned.html">android.text.Spanned</a>
  */
 public abstract class SpannedConfigurator extends Configurator<Spanned>
-        implements TextLinkify<Spanned, SpannedConfigurator> {
+        implements TextLinkify<Spanned, SpannedConfigurator>, LinksHandling<Spanned, SpannedConfigurator> {
     protected SpannedConfigurator(TextooContext textooContext) {
         super(textooContext);
     }
@@ -41,4 +41,6 @@ public abstract class SpannedConfigurator extends Configurator<Spanned>
     public abstract SpannedConfigurator linkify(Pattern p, String scheme, Linkify.MatchFilter matchFilter,
                                                 Linkify.TransformFilter transformFilter);
 
+    @Override
+    public abstract SpannedConfigurator addLinksHandler(LinksHandler handler);
 }

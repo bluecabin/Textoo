@@ -8,7 +8,7 @@ import org.bluecabin.textoo.util.CharSequenceSupport;
 /**
  * Created by fergus on 1/5/16.
  */
-public class SpannedConfiguratorImplTest extends ConfiguratorImplTest<Spanned, SpannedConfigurator, Spanned, SpannedConfigurator> {
+public class SpannedConfiguratorImplTest extends LinksHandlingConfiguratorImplTest<Spanned, SpannedConfigurator, Spanned, SpannedConfigurator> {
 
     @Override
     protected Spanned createInitState(CharSequence text) {

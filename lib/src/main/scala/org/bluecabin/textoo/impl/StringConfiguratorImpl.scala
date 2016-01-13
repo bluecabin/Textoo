@@ -16,7 +16,7 @@ import scala.collection.immutable.Queue
   */
 private class StringConfiguratorImpl private(override protected val initState: () => String,
                                              override protected val changes: ChangeQueue[String] = Queue.empty)
-                                            (implicit textooContext: TextooContext)
+                                            (implicit override protected val textooContext: TextooContext)
   extends StringConfigurator(textooContext)
   with ConfiguratorImpl[String, StringConfiguratorImpl] {
 
@@ -29,8 +29,6 @@ private class StringConfiguratorImpl private(override protected val initState: (
     new SpannedConfiguratorImpl({ () =>
       Html.fromHtml(apply(), imageGetter, tagHandler).toSpannable
     })
-
-  override protected def toResult(from: String): String = from
 
   private def toSpannedConfigurator = new SpannedConfiguratorImpl({ () => apply().toSpanned })
 
@@ -51,7 +49,7 @@ private class StringConfiguratorImpl private(override protected val initState: (
 
   override def linkifyWebUrls(): SpannedConfigurator = toSpannedConfigurator.linkifyWebUrls()
 
-  override protected def copy(newChanges: ChangeQueue[String]): StringConfiguratorImpl =
+  override protected def updateChanges(newChanges: ChangeQueue[String]): StringConfiguratorImpl =
     new StringConfiguratorImpl(initState, newChanges)
 }
 

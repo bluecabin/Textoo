@@ -15,10 +15,6 @@ import scala.collection.immutable.Queue
 private trait TextLinkifyImpl[T, C <: Configurator[T] with TextLinkify[T, C]]
   extends ConfiguratorImpl[T, C] with TextLinkify[T, C] {
 
-  protected val textooContext: TextooContext
-
-  private implicit def implicitTextooContext = textooContext
-
   override final def linkifyPhoneNumbers(): C = addAutoLinkMask(Linkify.PHONE_NUMBERS)
 
   override final def linkifyEmailAddresses(): C = addAutoLinkMask(Linkify.EMAIL_ADDRESSES)

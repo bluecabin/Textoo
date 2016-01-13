@@ -2,16 +2,15 @@ package org.bluecabin.textoo.impl
 
 import java.util.regex.Pattern
 
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
-import android.text.style.{ClickableSpan, URLSpan}
+import android.text.style.ClickableSpan
 import android.text.util.Linkify
 import android.text.util.Linkify.{MatchFilter, TransformFilter}
-import android.text.{Editable, Spanned}
-import android.view.View
 import android.widget.TextView
 import org.bluecabin.textoo.impl.Change.ChangeQueue
 import org.bluecabin.textoo.{LinksHandler, TextViewConfigurator, TextooContext}
-import org.bluecabin.textoo.util.CharSequenceSupport._
+
 import scala.collection.immutable.Queue
 
 /**
@@ -19,16 +18,17 @@ import scala.collection.immutable.Queue
   */
 private class TextViewConfiguratorImpl private(override protected val initState: () => TextView,
                                                override protected val changes: ChangeQueue[TextView],
-                                               val handlers: Queue[LinksHandler])
+                                               override protected val handlers: Queue[LinksHandler])
                                               (implicit override protected val textooContext: TextooContext)
   extends TextViewConfigurator(textooContext)
   with ConfiguratorImpl[TextView, TextViewConfigurator]
-  with TextLinkifyImpl[TextView, TextViewConfigurator] {
+  with TextLinkifyImpl[TextView, TextViewConfigurator]
+  with LinksHandlingImpl[TextView, TextViewConfigurator] {
 
-  override def addLinksHandler(handler: LinksHandler): TextViewConfigurator =
-    new TextViewConfiguratorImpl(initState, changes, handlers = handlers.enqueue(handler))
+  override protected def updateHandlers(newHandlers: Queue[LinksHandler]): TextViewConfigurator =
+    new TextViewConfiguratorImpl(initState, changes, handlers = newHandlers)
 
-  override protected def copy(newChanges: ChangeQueue[TextView]): TextViewConfigurator =
+  override protected def updateChanges(newChanges: ChangeQueue[TextView]): TextViewConfigurator =
     new TextViewConfiguratorImpl(initState, newChanges, handlers)
 
   override protected def linkifyText(text: TextView, mask: Int): TextView = {
@@ -47,31 +47,26 @@ private class TextViewConfiguratorImpl private(override protected val initState:
     text
   }
 
+
+  override protected def getSpannedFromResult(text: TextView): Option[Spanned] = text.getText match {
+    case spanned: Spanned => Some(spanned)
+    case _ => None
+  }
+
+  override protected def setSpannedToResult(spanned: Spanned, text: TextView): TextView = {
+    text.setText(spanned)
+    text
+  }
+
   override protected def toResult(text: TextView): TextView = {
-    text.getText match {
+    val currResult = super.toResult(text)
+    currResult.getText match {
       case spanned: Spanned =>
-        if (handlers.nonEmpty) {
-          val spannable = spanned.toSpannable
-          for {
-            urlSpan <- spanned.getSpans(0, spanned.length(), classOf[URLSpan])
-          } {
-            val url = urlSpan.getURL
-            val wrapper = new ClickableSpanWrapper(urlSpan, { v: View =>
-              handlers.find(_.onClick(text, url)).nonEmpty
-            })
-            val start = spanned.getSpanStart(urlSpan)
-            val end = spanned.getSpanEnd(urlSpan)
-            val flags = spanned.getSpanFlags(urlSpan)
-            spannable.removeSpan(urlSpan)
-            spannable.setSpan(wrapper, start, end, flags)
-          }
-          text.setText(spannable)
-        }
         if (spanned.getSpans(0, spanned.length(), classOf[ClickableSpan]).length > 0) {
-          text.setMovementMethod(LinkMovementMethod.getInstance())
+          currResult.setMovementMethod(LinkMovementMethod.getInstance())
         }
-        text
-      case _ => text
+        currResult
+      case _ => currResult
     }
 
   }

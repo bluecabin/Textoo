@@ -3,6 +3,6 @@ package org.bluecabin.textoo;
 /**
  * Configurator with link handling capability
  */
-interface LinksHandling<T, C extends Configurator<T>> {
+public interface LinksHandling<T, C extends LinksHandling<T, C>> {
     C addLinksHandler(LinksHandler handler);
 }
