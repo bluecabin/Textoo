@@ -1,3 +1,4 @@
 include ':lib'
 rootProject.name = "root"
 project(":lib").name = "textoo"
+

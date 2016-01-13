@@ -68,6 +68,8 @@ install {
         repository(url: temporaryDir.toURI())
         pom {
             project {
+                name projName
+                description projDescription
                 url siteUrl
                 licenses {
                     license {

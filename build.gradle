@@ -1,9 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 ext {
+    projName = "Textoo"
+    projDescription = "A text setup library for Android"
     projGroup = 'org.bluecabin.textoo'
-    projVerName = '0.9.3'
-    projVerVcsTag = '0.9.3'
+    projVerName = '0.9.4'
+    projVerVcsTag = '0.9.4'
     projVerAndroidCode = 1
     siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library
     gitUrl = 'https://github.com/bluecabin/Textoo.git'   // Git repository URL
