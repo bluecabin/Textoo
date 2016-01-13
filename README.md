@@ -4,10 +4,15 @@ Textoo is a library providing simple Fluent API for configuring text objects inc
 - Spanned
 - String
 
-Textoo enable developers to handle click events of links in text and perform any custom logics.
+With Textoo, developers can
 
-Textoo also wraps <a href="http://developer.android.com/reference/android/text/util/Linkify.html">android.text.util.Linkify</a>
-and expose the same functions with a simple fluent style API.
+- capture click events of links in text and perform any custom processing.
+- turn text into clickable links.
+Textoo wraps <a href="http://developer.android.com/reference/android/text/util/Linkify.html">android.text.util.Linkify</a>
+and expose the same functions with a simple and consistent fluent style API.
+- parse html source.
+Textoo wraps <a href="http://developer.android.com/reference/android/text/Html.html">android.text.Html</a>
+and expose the same functions with a simple and consistent fluent style API.
 
 ## Usage examples
 
