@@ -4,7 +4,7 @@ ext {
     projName = "Textoo"
     projDescription = "A text setup library for Android"
     projGroup = 'org.bluecabin.textoo'
-    projVerName = '0.9.6'
+    projVerName = '0.9.7-SNAPSHOT'
     projVerVcsTag = '0.9.6'
     projVerAndroidCode = 1
     siteUrl = 'https://github.com/bluecabin/Textoo'      // Homepage URL of the library

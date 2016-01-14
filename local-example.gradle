@@ -2,4 +2,5 @@ ext {
     bintrayUser = 'userId'
     bintrayApiKey = "apiKey"
     bintrayGPGPassphrase = 'The passphrase for GPG signing'
+    localRepoPath = new File(System.getProperty('user.home'), 'Development/LocalMavenRepo').absolutePath
 }

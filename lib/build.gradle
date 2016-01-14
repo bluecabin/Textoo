@@ -65,7 +65,7 @@ artifacts {
 
 install {
     repositories.mavenDeployer {
-        repository(url: temporaryDir.toURI())
+        repository(url: 'file://' + localRepoPath)
         pom {
             project {
                 name projName
