@@ -1,6 +1,6 @@
 # Textoo
 
-Current version is 1.0.0
+Current version is 1.0.1
 
 Textoo is a library providing simple Fluent API for configuring text objects including:
 - TextView
@@ -23,7 +23,7 @@ Gradle:
 
 ```gradle
 dependencies {
-    compile 'org.bluecabin.textoo:textoo:1.0.0'
+    compile 'org.bluecabin.textoo:textoo:1.0.1'
 }
 ```
 
@@ -33,7 +33,7 @@ Maven:
 <dependency>
     <groupId>org.bluecabin.textoo</groupId>
     <artifactId>textoo</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
