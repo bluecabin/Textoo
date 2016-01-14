@@ -65,7 +65,7 @@ artifacts {
 
 install {
     repositories.mavenDeployer {
-        repository(url: 'file://' + localRepoPath)
+        repository(url: 'file://' + localMavenRepoPath)
         pom {
             project {
                 name projName
