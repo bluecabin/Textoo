@@ -49,6 +49,10 @@ private class SpannedConfiguratorImpl private[impl](override protected val initS
   override protected def getSpannedFromResult(text: Spanned): Option[Spanned] = Some(text)
 
   override protected def setSpannedToResult(spanned: Spanned, text: Spanned): Spanned = spanned
+
+  override protected def getSpanned(text: Spanned): Spanned = text
+
+  override protected def setSpanned(text: Spanned, spanned: Spanned): Spanned = spanned
 }
 
 private object SpannedConfiguratorImpl {

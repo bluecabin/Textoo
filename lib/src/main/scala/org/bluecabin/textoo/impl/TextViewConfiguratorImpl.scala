@@ -9,6 +9,7 @@ import android.text.util.Linkify
 import android.text.util.Linkify.{MatchFilter, TransformFilter}
 import android.widget.TextView
 import org.bluecabin.textoo.impl.Change.ChangeQueue
+import org.bluecabin.textoo.util.CharSequenceSupport._
 import org.bluecabin.textoo.{LinksHandler, TextViewConfigurator, TextooContext}
 
 import scala.collection.immutable.Queue
@@ -54,6 +55,13 @@ private class TextViewConfiguratorImpl private(override protected val initState:
   }
 
   override protected def setSpannedToResult(spanned: Spanned, text: TextView): TextView = {
+    text.setText(spanned)
+    text
+  }
+
+  override protected def getSpanned(text: TextView): Spanned = text.getText.toSpanned
+
+  override protected def setSpanned(text: TextView, spanned: Spanned): TextView = {
     text.setText(spanned)
     text
   }
