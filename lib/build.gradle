@@ -22,12 +22,12 @@ android {
     buildTypes {
         debug {
             debuggable true
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -36,9 +36,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    provided 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:support-v4:22.2.1'
     compile "org.scala-lang:scala-library:$scalaVersion"
-    provided 'com.android.support:multidex:1.0.1'
 }
 
 task sourcesJar(type: Jar) {

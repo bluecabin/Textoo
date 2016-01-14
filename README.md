@@ -1,4 +1,7 @@
 # Textoo
+
+Current version is 1.0.0
+
 Textoo is a library providing simple Fluent API for configuring text objects including:
 - TextView
 - Spanned
@@ -14,12 +17,32 @@ and expose the same functions with a simple and consistent fluent style API.
 Textoo wraps <a href="http://developer.android.com/reference/android/text/Html.html">android.text.Html</a>
 and expose the same functions with a simple and consistent fluent style API.
 
-## Usage examples
+## Installation
+
+Gradle:
+
+```gradle
+dependencies {
+    compile 'org.bluecabin.textoo:textoo:1.0.0'
+}
+```
+
+Maven:
+
+```xml
+<dependency>
+    <groupId>org.bluecabin.textoo</groupId>
+    <artifactId>textoo</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+## Usage Examples
 
 ### Link TextView to system settings
 
 - res/values/strings.xml:
-    ```
+    ```xml
     <resources>
     ...
          <string name="str_location_disabled">Location is off.  Turn on in <a href="internal://settings/location">Location settings</a>.</string>
@@ -28,7 +51,7 @@ and expose the same functions with a simple and consistent fluent style API.
     ```
 
 - res/layout/myActivity.xml:
-    ```
+    ```xml
     ...
         <TextView
             android:id="@+id/view_location_disabled"
@@ -37,7 +60,7 @@ and expose the same functions with a simple and consistent fluent style API.
     ...
     ```
 - java/myPackage/MyActivity.java:
-    ```
+    ```java
     public class MyActivity extends Activity {
         ...
         protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +90,7 @@ and expose the same functions with a simple and consistent fluent style API.
 ### Linkify TextView
 
 - java/myPackage/MyActivity.java:
-    ```
+    ```java
     public class MyActivity extends Activity {
         ...
         private static Linkify.MatchFilter matchFilter = new Linkify.MatchFilter() {
@@ -106,7 +129,7 @@ and expose the same functions with a simple and consistent fluent style API.
 ### Parse HTML and handle links
 
 - java/myPackage/MyActivity.java:
-    ```
+    ```java
     public class MyActivity extends Activity {
         ...
         protected void onCreate(Bundle savedInstanceState) {
@@ -129,3 +152,14 @@ and expose the same functions with a simple and consistent fluent style API.
 
     ```
 
+## Documentation
+See [JavaDoc][2]
+
+## Getting Help
+To report a specific problem or feature request, open a new issue on Github. For questions, suggestions, or anything else, email to bluecabindev@gmail.com.
+
+## License
+BSD, part MIT and Apache 2.0. See the [LICENSE][1] file for details.
+
+[1]: https://github.com/bluecabin/Textoo/blob/master/LICENSE
+[2]: http://www.javadoc.io/doc/org.bluecabin.textoo/textoo
