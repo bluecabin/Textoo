@@ -159,7 +159,7 @@ See [JavaDoc][2]
 To report a specific problem or feature request, open a new issue on Github. For questions, suggestions, or anything else, email to bluecabindev@gmail.com.
 
 ## License
-BSD, part MIT and Apache 2.0. See the [LICENSE][1] file for details.
+Apache 2.0. See the [LICENSE][1] file for details.
 
 [1]: https://github.com/bluecabin/Textoo/blob/master/LICENSE
 [2]: http://www.javadoc.io/doc/org.bluecabin.textoo/textoo
